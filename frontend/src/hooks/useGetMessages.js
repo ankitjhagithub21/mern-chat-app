@@ -20,7 +20,7 @@ const useGetMessages = () => {
             console.log(error)
         }
     }
-   if(authUser){
+   if(authUser,selectedUser){
     fetchMessages()
    }
    },[selectedUser])
