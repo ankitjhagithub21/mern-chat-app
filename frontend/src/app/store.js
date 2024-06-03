@@ -7,6 +7,6 @@ export const store = configureStore({
   reducer: {
     user:userSlice,
     message:messageSlice,
-    socket:socketSlic
+   
   },
 })

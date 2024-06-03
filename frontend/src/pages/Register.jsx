@@ -8,7 +8,7 @@ const Register = () => {
         fullName: "",
         username: "",
         password: "",
-        gender: "",
+       
     }
     const [user, setUser] = useState(initialData)
     const [loading,setLoading] = useState(false)
@@ -85,34 +85,7 @@ const Register = () => {
                     className="input input-bordered w-full"
                     required
                 />
-                <div className='flex items-center gap-4 w-full'>
-                    <div className='flex items-center gap-2'>
-                        <label htmlFor="female">Female</label>
-                        <input
-                            type="radio"
-                            className='radio'
-                            id='female'
-                            name='gender'
-                            value="female"
-                           
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className='flex items-center gap-2'>
-                        <label htmlFor="male">Male</label>
-                        <input
-                            type="radio"
-                            className='radio'
-                            id='male'
-                            name='gender'
-                            value="male"
-                            
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                </div>
+               
                 <button className='btn btn-success text-white text-lg w-full' type='submit'>{loading ? 'Loading...':'Register'}</button>
                 <p>Already have an account ? <Link className='text-indigo-500 hover:underline' to={"/login"}>Login Here</Link></p>
             </form>

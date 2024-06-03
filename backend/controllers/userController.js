@@ -3,10 +3,10 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const register = async(req,res) =>{
     try{
-        const { fullName, username, password, gender } = req.body;
+        const { fullName, username, password} = req.body;
 
         // Check if all fields are provided
-        if (!fullName || !username || !password || !gender) {
+        if (!fullName || !username || !password) {
             return res.status(400).json({
                 success: false,
                 message: "All fields are required."
@@ -34,7 +34,7 @@ const register = async(req,res) =>{
             username,
             password: securePassword,
             profilePhoto,
-            gender
+           
         });
 
         // Save the new user to the database
