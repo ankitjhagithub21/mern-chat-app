@@ -57,6 +57,7 @@ const ChatTop = () => {
       
       <IoIosClose size={25} className='cursor-pointer' onClick={()=>setIsOpen(false)}/>
        </div>
+       <h2 className='border-b border-green-500'>Your Profile</h2>
          <img src={`https://robohash.org/${authUser.fullName}`} alt="profile_pic" className='w-14 h-14 bg-gray-800 rounded-full' />
          <h2 className='text-lg'>{authUser.fullName}</h2>
          <p className='text-sm'>Username: {authUser.username}</p>
