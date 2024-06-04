@@ -1,18 +1,23 @@
-import React from 'react'
-import ChatTop from './ChatTop'
-import MessageContainer from './MessageContainer'
-import ChatBottom from './ChatBottom'
-
+import React from 'react';
+import ChatTop from './ChatTop';
+import MessageContainer from './MessageContainer';
+import ChatBottom from './ChatBottom';
+import { useSelector } from 'react-redux';
 
 const ChatContainer = () => {
-  
-  return (
-    <div className='flex flex-col lg:w-full '>
-        <ChatTop/>
-        <MessageContainer/>
-        <ChatBottom/>
-    </div>
-  )
-}
+    const selectedUser = useSelector((state) => state.user.selectedUser);
 
-export default ChatContainer
+    return (
+        <div className={`lg:flex flex-col w-full ${selectedUser ? 'flex' : 'hidden lg:flex'}`}>
+            {
+                selectedUser && <>
+                    <ChatTop />
+                    <MessageContainer />
+                    <ChatBottom />
+                </>
+            }
+        </div>
+    );
+};
+
+export default ChatContainer;
