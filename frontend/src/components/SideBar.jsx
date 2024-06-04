@@ -3,8 +3,9 @@ import OtherUsers from './OtherUsers'
 import SearchBar from './SearchBar'
 
 const SideBar = () => {
+
     return (
-        <div className='w-1/3 flex flex-col gap-4 p-2 border-r'>
+        <div className='lg:w-1/3 w-full  flex flex-col gap-4 p-2 border-r'>
             <SearchBar/>
             <OtherUsers/>
 

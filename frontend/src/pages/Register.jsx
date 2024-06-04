@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 import { Link, useNavigate } from 'react-router-dom'
+import { passwordValidator } from '../helpers/passwordValidator'
 
 
 const Register = () => {
@@ -8,10 +9,10 @@ const Register = () => {
         fullName: "",
         username: "",
         password: "",
-       
+
     }
     const [user, setUser] = useState(initialData)
-    const [loading,setLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
     const handleChange = (e) => {
@@ -23,33 +24,51 @@ const Register = () => {
         })
     }
 
-    const handleRegister = async(e) => {
+    const handleRegister = async (e) => {
         e.preventDefault()
-
-     try{
-        setLoading(true)
-        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/user/register`,{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify(user)
-        })
-        const data = await res.json()
-        if(data.success){
-            toast.success(data.message)
-            setUser(initialData)
-            navigate("/login")
-            
-        }else{
-            toast.error(data.message)
+      
+        if (user.fullName.length < 3 || user.fullName.length > 20) {
+            return toast.error("Name should be min 3 char long and max 20 char long.")
         }
-     }catch(error){
-        console.log(error)
-        toast.error(error.message)
-     }finally{
-        setLoading(false)
-     }
+
+        if (user.username.length < 5 || user.username.length > 20) {
+            return toast.error("Username should be min 5 char long and max 20 char long.")
+        }
+        
+        let result = passwordValidator(user.password)
+        if (result.success) {
+
+            try {
+                setLoading(true)
+                const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/user/register`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(user)
+                })
+                const data = await res.json()
+                if (data.success) {
+                    toast.success(data.message)
+                    setUser(initialData)
+                    navigate("/login")
+
+                } else {
+                    toast.error(data.message)
+                }
+            } catch (error) {
+                console.log(error)
+                toast.error(error.message)
+            } finally {
+                setLoading(false)
+            }
+        } else {
+            toast.error(result.msg)
+        }
+
+
+
+
 
 
     }
@@ -85,8 +104,8 @@ const Register = () => {
                     className="input input-bordered w-full"
                     required
                 />
-               
-                <button className='btn btn-success text-white text-lg w-full' type='submit'>{loading ? 'Loading...':'Register'}</button>
+
+                <button className='btn btn-success text-white text-lg w-full' type='submit'>{loading ? 'Loading...' : 'Register'}</button>
                 <p>Already have an account ? <Link className='text-indigo-500 hover:underline' to={"/login"}>Login Here</Link></p>
             </form>
 
