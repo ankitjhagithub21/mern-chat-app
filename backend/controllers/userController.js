@@ -23,13 +23,11 @@ const register = async(req,res) =>{
 
        
         const securePassword = await bcrypt.hash(password, 10);      
-        const profilePhoto = `https://avatar.iran.liara.run/username?username=${fullName}`;
 
         const newUser = new User({
             fullName,
             username,
             password: securePassword,
-            profilePhoto,
            
         });
 
@@ -94,12 +92,6 @@ const login = async (req, res) => {
         res.status(200).json({
             success: true,
             message: "Login Successful.",
-            user: {
-                _id: userExist._id,
-                username: userExist.username,
-                fullName: userExist.fullName,
-                profilePhoto: userExist.profilePhoto
-            }
         });
 
     } catch (error) {
@@ -155,6 +147,36 @@ const getOtherUsers = async (req, res) => {
 }
 
 
+const getCurrUser = async(req,res) =>{
+    try{
+        const userId = req.id;
+
+        if(!userId){
+            return res.status(401).json({
+                success:false,
+                message:"You are not authorized."
+            })
+        }
+        const user = await User.findById(userId).select("-password")
+
+        if(!user){
+            return res.status(401).json({
+                success:false,
+                message:"You are not authorized."
+            })
+        }
+        res.status(200).json({
+            success:true,
+            user
+        })
+
+    }catch(error){
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error."
+        }); 
+    }
+}
 
 
 module.exports = {
@@ -162,5 +184,6 @@ module.exports = {
     login,
     logout,
     getOtherUsers,
+    getCurrUser
     
 }

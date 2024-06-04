@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import toast from "react-hot-toast"
-import { useDispatch } from 'react-redux'
-import {setUser} from "../app/userSlice"
+
+
 
 const Login = () => {
     const initialData = {
@@ -11,7 +11,6 @@ const Login = () => {
     }
     const [user, setUserState] = useState(initialData)
     const [loading, setLoading] = useState(false)
-    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const handleChange = (e) => {
@@ -37,7 +36,6 @@ const Login = () => {
             })
             const data = await res.json()
             if (data.success) {
-                dispatch(setUser(data.user))
                 toast.success(data.message)
                 setUserState(initialData)
                 navigate("/")

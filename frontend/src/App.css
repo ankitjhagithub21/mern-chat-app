@@ -1,15 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+body{
+    font-family: "DM Sans", sans-serif;
+}
 ::-webkit-scrollbar {
     width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-    background-color: whitesmoke;
-    border-radius: 3px;
+    background-color: white;
+   
 }
 
 ::-webkit-scrollbar-thumb {
     background-color:#2B3440;
-    border-radius: 3px;
+    
 }
 
 

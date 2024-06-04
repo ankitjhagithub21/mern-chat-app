@@ -14,7 +14,7 @@ export const SocketProvider = ({ children, authUser }) => {
     if (authUser) {
       const newSocket = io(`${import.meta.env.VITE_SERVER_URL}`, {
         query: {
-          userId: authUser.id,
+          userId: authUser._id,
         },
       });
 

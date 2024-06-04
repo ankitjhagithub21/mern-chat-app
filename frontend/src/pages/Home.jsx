@@ -1,53 +1,52 @@
 import SideBar from '../components/SideBar';
 import ChatContainer from '../components/ChatContainer';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { setSelectedUser, setUser, setOtherUsers, setOnlineUsers } from '../app/userSlice';
-import toast from 'react-hot-toast';
-import handleLogout from '../helpers/handleLogout';
-import { setMessages } from '../app/messageSlice';
-import { useSocket } from '../SocketContext';
+import { Navigate} from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import getUserFromServer from '../helpers/getUserFromServer';
+import { setUser } from '../app/userSlice';
+import Loading from '../components/Loading';
+
 
 
 const Home = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { selectedUser } = useSelector((state) => state.user);
-  const socket = useSocket();
 
-  const handleClick = () => {
-    handleLogout().then((data) => {
-      if (data.success) {
-        dispatch(setUser(null));
-        dispatch(setOtherUsers(null));
-        dispatch(setSelectedUser(null));
-        dispatch(setOnlineUsers(null));
-        dispatch(setMessages(null));
-        if (socket) {
-          socket.close();
-        }
-        toast.success(data.message);
-        navigate('/login');
+  const { authUser,selectedUser } = useSelector((state) => state.user);
+  const [loading,setLoading] = useState(true)
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    getUserFromServer().then((data)=>{
+      if(data.success){
+        dispatch(setUser(data.user)) 
+      }else{
+        dispatch(setUser(null))
       }
-    });
-  };
+    }).catch((error)=>{
+      console.log(error)
+    }).finally(()=>{
+      setLoading(false)
+    })
+  },[]) 
+
+
+  if(loading){
+    return <Loading/>
+  }
   
+  if(!authUser){
+    return <Navigate to={"/login"}/>
+  }
 
   return (
-    <div className='w-full h-screen flex items-center justify-center'>
-      <div className='lg:w-[90vw] w-full lg:h-[90vh] h-full flex lg:border border-0 rounded-lg'>
+    <div className='w-full h-screen flex items-center justify-center bg-[#1abc9c]'>
+      <div className='w-[90%] h-[90vh] bg-white rounded-lg shadow-lg flex main-container'>
         <SideBar />
         {selectedUser ? (
           <ChatContainer />
         ) : (
           <div className='flex flex-col gap-2 items-center justify-center w-full h-full text-xl'>
-            <h2 className='text-xl'>Welcome {authUser.fullName}</h2>
-            <button
-              onClick={handleClick}
-              className='px-4 py-2 outline-none bg-red-500 text-white rounded-lg'
-            >
-              Logout
-            </button>
+            <h2 className='text-2xl font-semibold'>Welcome {authUser?.fullName}</h2>
+            <p className='text-lg'>Let's Start Conversation.</p>
           </div>
         )}
       </div>

@@ -8,12 +8,12 @@ const MessageContainer = () => {
     const messages = useSelector(state=>state.message.value)
     
     if(!messages || messages.length==0){
-        return <div className='h-full text-center'>
+        return <div className='h-full bg-[#1abc9c] text-white text-center'>
           <p className='text-lg p-4'>Let's start conversation.</p>
         </div>;
     }
     return (
-        <div className='overflow-auto p-2 h-full  flex flex-col  gap-3 w-full '>
+        <div className='overflow-auto p-2 h-full bg-[#1abc9c]  flex flex-col  gap-3 w-full '>
            
           {
             messages.map((message)=>{

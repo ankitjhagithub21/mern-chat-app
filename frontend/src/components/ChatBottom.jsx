@@ -40,7 +40,7 @@ const ChatBottom = () => {
   };
 
   return (
-    <form className='bg-gray-200 flex items-center px-2' onSubmit={handleSendMessage}>
+    <form className=' rounded-br-lg flex items-center px-2' onSubmit={handleSendMessage}>
       <input
         type='text'
         placeholder='Send a message...'
