@@ -21,6 +21,8 @@ const ChatBottom = () => {
       
       return toast.error("A message is alredy sending...");
     }
+    const tempMsg = message
+    setMessage('')
     try {
       setLoading(true)
       const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/message/send/${selectedUser._id}`, {
@@ -29,12 +31,12 @@ const ChatBottom = () => {
           'Content-Type': 'application/json',
         },
         credentials: 'include',
-        body: JSON.stringify({ message }),
+        body: JSON.stringify({ message:tempMsg }),
       });
 
       const data = await res.json();
       if (data.success) {
-        setMessage('');
+       
         dispatch(setMessages([...messages, data.message]));
         if (socket) {
           socket.emit('sendMessage', data.message);
