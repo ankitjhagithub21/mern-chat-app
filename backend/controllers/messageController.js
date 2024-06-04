@@ -1,6 +1,6 @@
 const Conversation = require("../models/conversation");
 const Message = require("../models/message");
-const { getSocketReceiverId, io } = require("../socket/socket");
+const { getSocketReceiverId,io } = require("../socket/socket");
 
 const sendMessage = async(req,res) => {
     try{

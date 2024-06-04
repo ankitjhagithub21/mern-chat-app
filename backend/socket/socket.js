@@ -1,6 +1,7 @@
 const { Server } = require('socket.io');
 const http = require('http');
 const express = require('express');
+
 const app = express();
 
 const server = http.createServer(app);
@@ -13,9 +14,10 @@ const io = new Server(server, {
 
 const userSocketMap = {};
 
-const getSocketReceiverId = (receiverId) => {
-  return userSocketMap[receiverId]
+const getSocketReceiverId = (receiverId) =>{
+    return userSocketMap[receiverId]
 }
+
 
 io.on('connection', (socket) => {
   const userId = socket.handshake.query.userId;
@@ -27,7 +29,7 @@ io.on('connection', (socket) => {
   io.emit('getOnlineUsers', Object.keys(userSocketMap));
 
   socket.on('disconnect', () => {
-
+    
     for (const [key, value] of Object.entries(userSocketMap)) {
       if (value === socket.id) {
         delete userSocketMap[key];
@@ -39,4 +41,4 @@ io.on('connection', (socket) => {
   });
 });
 
-module.exports = { app, io, server, getSocketReceiverId };
+module.exports = { app,io, server,getSocketReceiverId };

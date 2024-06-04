@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from 'react';
 import SideBar from '../components/SideBar';
 import ChatContainer from '../components/ChatContainer';
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { setSelectedUser, setUser, setOtherUsers, setOnlineUsers } from '../app/userSlice';
 import toast from 'react-hot-toast';
 import handleLogout from '../helpers/handleLogout';
 import { setMessages } from '../app/messageSlice';
 import { useSocket } from '../SocketContext';
-import getUserFromServer from '../helpers/getUserFromServer';
+
 
 const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { authUser, selectedUser } = useSelector((state) => state.user);
-  const [loading,setLoading] = useState(true)
+  const { selectedUser } = useSelector((state) => state.user);
   const socket = useSocket();
 
   const handleClick = () => {
@@ -33,27 +31,7 @@ const Home = () => {
       }
     });
   };
-  useEffect(()=>{
-    if(!authUser){
-      getUserFromServer().then((data)=>{
-        if(data.success){
-          dispatch(setUser(data.user))
-          
-        }
-      }).catch((error)=>{
-        console.log(error)
-      }).finally(()=>{
-        setLoading(false)
-      })
-    }
-  },[])
-  if(loading){
-    return <p>Loading..</p>
-  }
-
-  if (!authUser) {
-    return <Navigate to='/login' />;
-  }
+  
 
   return (
     <div className='w-full h-screen flex items-center justify-center'>

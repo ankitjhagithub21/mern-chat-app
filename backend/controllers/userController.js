@@ -95,7 +95,7 @@ const login = async (req, res) => {
             success: true,
             message: "Login Successful.",
             user: {
-                id: userExist._id,
+                _id: userExist._id,
                 username: userExist.username,
                 fullName: userExist.fullName,
                 profilePhoto: userExist.profilePhoto
@@ -153,32 +153,7 @@ const getOtherUsers = async (req, res) => {
         });
     }
 }
-const getUser = async (req, res) => {
-    try {
-        const userId = req.id; 
 
-        const user = await User.findById(userId).select("-password")
-
-        if (!user) {
-            return res.status(404).json({
-                success: false,
-                message: "No user found."
-            });
-        }
-
-        res.status(200).json({
-            success: true,
-            user
-        });
-
-    } catch (error) {
-        console.error("Error fetching other users:", error); 
-        res.status(500).json({
-            success: false,
-            message: "Internal Server Error."
-        });
-    }
-}
 
 
 
@@ -187,5 +162,5 @@ module.exports = {
     login,
     logout,
     getOtherUsers,
-    getUser
+    
 }
