@@ -32,8 +32,10 @@ const ChatTop = () => {
   };
 
   return (
-    <div className='p-2 rounded-tr-lg flex justify-between items-center relative'>
+    <div className='p-2 rounded-lg flex justify-between items-center relative'>
+     
       <div className='flex items-center gap-2'>
+      
         <img
           src={`https://robohash.org/${selectedUser.fullName}`}
           alt='profile_pic'
@@ -41,8 +43,13 @@ const ChatTop = () => {
         />
         <p className='text-lg'>{selectedUser?.fullName}</p>
       </div>
-      <div>
-      <BsThreeDotsVertical size={20} className='cursor-pointer' onClick={()=>setIsOpen(true)}/>
+      <div className='flex items-center gap-1'>
+      {
+        selectedUser && <button className='lg:hidden bg-gray-200 px-2 py-1 rounded-lg' onClick={()=>dispatch(setSelectedUser(null))}>
+          Back
+        </button>
+      }
+      <BsThreeDotsVertical size={25} className='cursor-pointer' onClick={()=>setIsOpen(true)}/>
       </div>
       <div className={`${isOpen ? 'absolute':'hidden'} rounded-lg p-5 bg-gray-200 shadow-lg right-1 top-14 z-10 flex items-center flex-col gap-2`}>
 

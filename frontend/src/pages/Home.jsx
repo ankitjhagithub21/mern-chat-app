@@ -35,7 +35,7 @@ const Home = () => {
     }
 
     return (
-        <div className='w-full h-screen flex items-center justify-center bg-[#1abc9c]'>
+        <div className='w-full h-screen flex items-center justify-center bg-[#1abc9c] '>
             <div className='w-[90%] h-[90vh] bg-white rounded-lg shadow-lg flex'>
                 <SideBar />
                 <ChatContainer />
